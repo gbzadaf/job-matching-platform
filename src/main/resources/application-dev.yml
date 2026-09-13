@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jobmatching_dev
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    com.seunome.jobmatchingplatform: DEBUG
+    org.hibernate.SQL: DEBUG
