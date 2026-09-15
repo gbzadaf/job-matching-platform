@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/jobmatching_dev
     username: postgres
-    password: postgres
+    password: 7654321
   jpa:
     show-sql: true
 

@@ -34,7 +34,7 @@ public class Job {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "jobs_required_skills",
+            name = "job_required_skills",
             joinColumns = @JoinColumn(name = "job_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
