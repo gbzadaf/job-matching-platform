@@ -47,4 +47,18 @@ public class Candidate {
     }
 
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Candidate candidate)) return false;
+        return id != null && id.equals(candidate.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+
 }
