@@ -56,4 +56,17 @@ public class Job {
             this.status = JobStatus.OPEN;
         }
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Job job)) return false;
+        return id != null && id.equals(job.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
