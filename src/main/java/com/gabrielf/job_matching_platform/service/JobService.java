@@ -43,6 +43,14 @@ public class JobService {
     }
 
     @Transactional(readOnly = true)
+    public JobResponse findById(UUID id) {
+        Job job = jobRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + id));
+        return JobResponse.fromEntity(job);
+
+    }
+
+    @Transactional(readOnly = true)
     public Page<JobResponse> findOpenJobs(Pageable pageable) {
         return jobRepository.findByStatus(JobStatus.OPEN, pageable)
                 .map(JobResponse::fromEntity);
