@@ -3,6 +3,7 @@ package com.gabrielf.job_matching_platform.service;
 import com.gabrielf.job_matching_platform.dto.request.CandidateRequest;
 import com.gabrielf.job_matching_platform.dto.response.CandidateResponse;
 import com.gabrielf.job_matching_platform.exception.DuplicateResourceException;
+import com.gabrielf.job_matching_platform.exception.ForbiddenOperationException;
 import com.gabrielf.job_matching_platform.exception.ResourceNotFoundException;
 import com.gabrielf.job_matching_platform.model.Candidate;
 import com.gabrielf.job_matching_platform.model.Skill;
@@ -50,9 +51,13 @@ public class CandidateService {
 
     }
 
-    public CandidateResponse updateProfile(UUID id, CandidateRequest request) {
+    public CandidateResponse updateProfile(UUID id, UUID authenticatedUserId, CandidateRequest request) {
         Candidate candidate = candidateRepository.findByIdWithUser(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Candidate not found with id: " + id));
+
+        if (!candidate.getUser().getId().equals(authenticatedUserId)) {
+            throw new ForbiddenOperationException("You do not have permission to update this profile");
+        }
 
         candidate.setBio(request.bio());
         candidate.setSkills(skillService.resolveSkills(request.skills()));

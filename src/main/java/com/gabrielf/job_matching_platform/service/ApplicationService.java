@@ -28,14 +28,14 @@ public class ApplicationService {
     private final CandidateRepository  candidateRepository;
     private final JobRepository jobRepository;
 
-    public ApplicationResponse apply(UUID candidateId, ApplicationRequest request) {
-        Candidate candidate = candidateRepository.findByIdWithUser(candidateId)
-                .orElseThrow(() -> new ResourceNotFoundException("Candidate not found with id: " + candidateId));
+    public ApplicationResponse apply(UUID userId, ApplicationRequest request) {
+        Candidate candidate = candidateRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Candidate not found with id: " + userId));
 
         Job job = jobRepository.findById(request.jobId())
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + request.jobId()));
 
-        if (applicationRepository.existsByCandidateIdAndJobId(candidateId, job.getId())) {
+        if (applicationRepository.existsByCandidateIdAndJobId(candidate.getId(), job.getId())) {
             throw new DuplicateResourceException("Candidate has already applied to this job");
 
         }
