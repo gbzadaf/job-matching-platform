@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("v1/api/matching")
+@RequestMapping("api/v1/matching")
 @RequiredArgsConstructor
 public class MatchController {
 

@@ -2,7 +2,9 @@ package com.gabrielf.job_matching_platform.controller;
 
 import com.gabrielf.job_matching_platform.dto.request.JobRequest;
 import com.gabrielf.job_matching_platform.dto.response.JobResponse;
+import com.gabrielf.job_matching_platform.model.User;
 import com.gabrielf.job_matching_platform.model.enums.JobStatus;
+import com.gabrielf.job_matching_platform.security.AuthenticatedUserProvider;
 import com.gabrielf.job_matching_platform.service.JobService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,21 +12,25 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
-@RequestMapping("v1/api/jobs")
+@RequestMapping("api/v1/jobs")
 @RequiredArgsConstructor
 public class JobController {
 
     private final JobService jobService;
+    private final AuthenticatedUserProvider authenticatedUserProvider;
 
-    @PostMapping("/{recruiterId}")
+    @PostMapping
     public ResponseEntity<JobResponse> create(
-            @PathVariable UUID recruiterId, @Valid @RequestBody JobRequest request) {
-        JobResponse response = jobService.create(recruiterId, request);
+            @AuthenticationPrincipal UserDetails userDetails, @Valid @RequestBody JobRequest request) {
+        User currentUser = authenticatedUserProvider.getCurrentUser(userDetails);
+        JobResponse response = jobService.create(currentUser.getId(), request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
