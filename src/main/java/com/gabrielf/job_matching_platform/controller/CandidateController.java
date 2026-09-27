@@ -5,6 +5,7 @@ import com.gabrielf.job_matching_platform.dto.response.CandidateResponse;
 import com.gabrielf.job_matching_platform.model.User;
 import com.gabrielf.job_matching_platform.security.AuthenticatedUserProvider;
 import com.gabrielf.job_matching_platform.service.CandidateService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/candidates")
 @RequiredArgsConstructor
+@Tag(name = "Candidates", description = "Candidate profile management")
 public class CandidateController {
 
     private final CandidateService candidateService;
