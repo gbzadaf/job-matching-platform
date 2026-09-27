@@ -8,6 +8,7 @@ import com.gabrielf.job_matching_platform.exception.ResourceNotFoundException;
 import com.gabrielf.job_matching_platform.model.Candidate;
 import com.gabrielf.job_matching_platform.model.Skill;
 import com.gabrielf.job_matching_platform.model.User;
+import com.gabrielf.job_matching_platform.model.enums.Role;
 import com.gabrielf.job_matching_platform.repository.CandidateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,11 @@ public class CandidateService {
         }
 
         User user = userService.findEntityById(userId);
+
+        if (user.getRole() != Role.CANDIDATE) {
+            throw new ForbiddenOperationException("Only users with CANDIDATE role can create a candidate profile");
+        }
+
         Set<Skill> skills = skillService.resolveSkills(request.skills());
 
         Candidate candidate = Candidate.builder()

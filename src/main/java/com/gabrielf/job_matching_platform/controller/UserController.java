@@ -3,6 +3,7 @@ package com.gabrielf.job_matching_platform.controller;
 import com.gabrielf.job_matching_platform.dto.request.RegisterRequest;
 import com.gabrielf.job_matching_platform.dto.response.UserResponse;
 import com.gabrielf.job_matching_platform.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/users")
 @RequiredArgsConstructor
+@Tag(name = "Users", description = "User registration and lookup")
 public class UserController {
 
     private final UserService userService;

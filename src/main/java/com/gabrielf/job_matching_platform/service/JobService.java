@@ -2,11 +2,13 @@ package com.gabrielf.job_matching_platform.service;
 
 import com.gabrielf.job_matching_platform.dto.request.JobRequest;
 import com.gabrielf.job_matching_platform.dto.response.JobResponse;
+import com.gabrielf.job_matching_platform.exception.ForbiddenOperationException;
 import com.gabrielf.job_matching_platform.exception.ResourceNotFoundException;
 import com.gabrielf.job_matching_platform.model.Job;
 import com.gabrielf.job_matching_platform.model.Skill;
 import com.gabrielf.job_matching_platform.model.User;
 import com.gabrielf.job_matching_platform.model.enums.JobStatus;
+import com.gabrielf.job_matching_platform.model.enums.Role;
 import com.gabrielf.job_matching_platform.repository.JobRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,11 @@ public class JobService {
 
     public JobResponse create (UUID recruiterId, JobRequest request) {
         User recruiter = userService.findEntityById(recruiterId);
+
+        if (recruiter.getRole() != Role.RECRUITER) {
+            throw new ForbiddenOperationException("Only users with RECRUITER role can create job postings");
+        }
+
         Set<Skill> skills = skillService.resolveSkills(request.requiredSkills());
 
         Job job = Job.builder()

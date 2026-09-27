@@ -2,6 +2,7 @@ package com.gabrielf.job_matching_platform.controller;
 
 import com.gabrielf.job_matching_platform.dto.response.JobMatchResponse;
 import com.gabrielf.job_matching_platform.service.MatchingService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/matching")
 @RequiredArgsConstructor
+@Tag(name = "Matching", description = "Candidate-job compatibility scoring")
 public class MatchController {
 
     private final MatchingService  matchingService;

@@ -6,6 +6,7 @@ import com.gabrielf.job_matching_platform.model.User;
 import com.gabrielf.job_matching_platform.model.enums.JobStatus;
 import com.gabrielf.job_matching_platform.security.AuthenticatedUserProvider;
 import com.gabrielf.job_matching_platform.service.JobService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/jobs")
 @RequiredArgsConstructor
+@Tag(name = "Jobs", description = "Job posting management")
 public class JobController {
 
     private final JobService jobService;
