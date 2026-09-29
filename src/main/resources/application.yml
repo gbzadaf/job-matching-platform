@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: job-matching-platform
+  profiles:
+    active: dev
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 86400000
