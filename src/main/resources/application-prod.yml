@@ -8,4 +8,4 @@ spring:
 
 logging:
   level:
-    com.seunome.jobmatchingplatform: INFO
+    com.gabrielf.jobmatchingplatform: INFO
